@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Notes</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" 
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" 
+        integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" 
+        crossorigin="anonymous">
+    {% load crispy_forms_tags %}
+    <style>
+        textarea {
+            resize: none;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-light">
+    <header class="mb-4">
+        <nav class="navbar text-dark bg-light py-3">
+            <div class="col">
+                <a href="/" style="text-decoration:none" class="text-info">
+                    <h4>Postage</h4>
+                </a>
+            </div>
+        </nav>
+    </header>
+        
+    <div class="container">
+        <div class="row d-flex justify-content-center mb-5">
+            {% if notes %}
+                {% for note in notes %}
+                    <div class="col-md-3 border shadow p-5 w-100 mr-5 mb-5 text-center">
+                        "{{ note.note }}"
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h4 class="text-danger"><em>No notes added yet</em></h4>
+            {% endif %}
+        </div>
+        <!-- <div class="row"> -->
+            <form class="noteForm" action="/newNote/" method="POST">
+                {% csrf_token %}
+                <div class="form-group w-50">
+                    {{ form.note|as_crispy_field }}
+                </div>
+                <div class="form-group text-left w-50">
+                    <button type="submit" class="btn btn-outline-success">Post It</button>
+                </div>
+            </form>
+        <!-- </div> -->
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" 
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" 
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" 
+        crossorigin="anonymous"></script>
+    <script>
+        $('.noteForm').submit(function(event) {
+            event.preventDefault();
+            console.log("Form submitted but no HTTP request sent!");
+            data = $(this).serializeArray();
+            postage = data[1].value;
+            $.ajax({
+                method: 'POST',
+                
+            });
+        })
+    </script>
+</body>
+
+</html>
